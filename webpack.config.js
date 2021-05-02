@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = () => {
     const env = dotenv.config().parsed;
@@ -14,8 +15,29 @@ module.exports = () => {
             index: './src/index.js',
         },
         output: {
-            filename: 'bundle.js',
-            path: path.resolve('./public'),
+            filename: 'js/[name].[hash].js',
+            path: path.resolve('./build'),
+            chunkFilename: 'js/[name].[chunkhash].js',
+        },
+        optimization: {
+            runtimeChunk: 'single',
+            splitChunks: {
+                cacheGroups: {
+                    commons: {
+                        chunks: 'initial',
+                        minChunks: 1,
+                        maxInitialRequests: 5, // The default limit is too small to showcase the effect
+                        minSize: 0, // This is example is too small to create commons chunks
+                    },
+                    vendor: {
+                        test: /node_modules/,
+                        chunks: 'initial',
+                        name: 'vendor',
+                        priority: 10,
+                        enforce: true,
+                    },
+                },
+            },
         },
         resolve: {
             alias: {
@@ -50,6 +72,13 @@ module.exports = () => {
                 },
             },
         },
-        plugins: [new webpack.DefinePlugin(envKeys)],
+        plugins: [
+            new webpack.DefinePlugin(envKeys),
+            new HtmlWebpackPlugin({
+                // 配置 HTML 模板路徑與生成名稱 (第三步)
+                template: './public/index.html',
+                filename: 'index.html',
+            }),
+        ],
     };
 };
