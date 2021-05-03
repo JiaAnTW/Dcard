@@ -1,12 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchPost } from '@/data/models/post';
-import {
-    postSelector,
-    isFetchAllSelector,
-    requestSelector,
-} from '@/data/selectors/post';
+import { postSelector } from '@/data/selectors/post';
 
 function usePost() {
     // mutex lock的功能
@@ -14,8 +10,6 @@ function usePost() {
 
     const dispatch = useDispatch();
     const postsArr = useSelector(postSelector);
-    const isFetchAll = useSelector(isFetchAllSelector);
-    const requestNum = useSelector(requestSelector);
 
     // 換城市的時候一定要重新抓
     useEffect(() => {
@@ -24,10 +18,10 @@ function usePost() {
 
     useEffect(() => {
         // 避免重複 or 抓到底後沒用的fetch
-        if (fetchSignal && !isFetchAll) {
+        if (fetchSignal) {
             dispatch(fetchPost(postsArr[postsArr.length - 1].id));
         }
-    }, [fetchSignal, isFetchAll]);
+    }, [fetchSignal]);
 
     // 當fetch結束後要還原lock
     useEffect(() => {

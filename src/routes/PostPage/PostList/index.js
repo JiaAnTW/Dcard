@@ -1,5 +1,4 @@
-import React, { useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useRef } from 'react';
 
 import useListData from './useListData';
 import { PostList } from './style';
@@ -10,12 +9,8 @@ function Post() {
     const listRef = useRef(undefined);
     const postsArr = useListData(listRef);
 
-    useEffect(() => {
-        if (listRef.current) listRef.current.scrollTop = 0;
-    }, [listRef]);
-
     return (
-        <VirtualWindow Container={PostList} ref={listRef}>
+        <VirtualWindow Container={PostList} height={155} ref={listRef}>
             {postsArr.map(({ id, title, excerpt }) => (
                 <Card key={id}>
                     <CardTitle>{title}</CardTitle>
