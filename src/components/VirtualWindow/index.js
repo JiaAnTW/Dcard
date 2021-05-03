@@ -25,7 +25,7 @@ const VirtualWindow = forwardRef(({ Container, height, children }, ref) => {
             });
         });
         setElements(nextChildren);
-    }, [topIndex, bottomIndex, children, ref]);
+    }, [topIndex, bottomIndex, children]);
 
     return (
         <Container ref={ref}>
