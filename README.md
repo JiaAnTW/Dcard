@@ -38,8 +38,7 @@ src
 
 -   功能: 以原生 JS + React 實現在大量列表中，只渲染出會出現在畫面中的列表元素。
 -   props:
-    -   Container? :ReactElement
-        -   default value: `<div>`
+    -   Container : ReactElement
         -   要作為容器的元素
     -   height : number
         -   單一列表元素的高度，每個列表都會是固定的高度
