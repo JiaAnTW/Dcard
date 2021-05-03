@@ -25,6 +25,8 @@ src
 |	|____Page(頁面元素)
 |		|____LocalComponent(頁面元件)
 |
+|____theme(global style設定)
+|
 |____utils(共用hook)
 |
 |____App.js(專案設定，如Provider、global style)
