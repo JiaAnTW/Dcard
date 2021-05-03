@@ -1,15 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = () => {
-    const env = dotenv.config().parsed;
-    const envKeys = Object.keys(env).reduce((prev, next) => {
-        prev[`process.env.${next}`] = JSON.stringify(env[next]);
-        return prev;
-    }, {});
-
     return {
         entry: {
             index: './src/index.js',
@@ -26,8 +19,8 @@ module.exports = () => {
                     commons: {
                         chunks: 'initial',
                         minChunks: 1,
-                        maxInitialRequests: 5, // The default limit is too small to showcase the effect
-                        minSize: 0, // This is example is too small to create commons chunks
+                        maxInitialRequests: 5,
+                        minSize: 0,
                     },
                     vendor: {
                         test: /node_modules/,
@@ -73,9 +66,7 @@ module.exports = () => {
             },
         },
         plugins: [
-            new webpack.DefinePlugin(envKeys),
             new HtmlWebpackPlugin({
-                // 配置 HTML 模板路徑與生成名稱 (第三步)
                 template: './public/index.html',
                 filename: 'index.html',
             }),
