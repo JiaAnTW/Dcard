@@ -46,8 +46,9 @@ src
     -   ref : ReactRef
         -   這個 ref 會被綁定在 Container 上
 
-```html
-<VirtualWindow Container="{PostList}" height="{155}" ref="{listRef}">
+```jsx
+<VirtualWindow Container={PostList} height={155} ref={listRef}>
+    {/* array elements */}
 </VirtualWindow>
 ```
 
@@ -61,5 +62,7 @@ src
 // 當ref捲動到底部時，會呼叫第一個參數callback
 useScrollBottomEffect(callback, ref);
 
-useScrollBottomEffect(() => {}, ref);
+useScrollBottomEffect(() => {
+    /* do someting when scroll to bottom */
+}, ref);
 ```
